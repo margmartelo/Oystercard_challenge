@@ -17,4 +17,12 @@ describe Oystercard do
       end
     end
 
+    describe "#deduct" do
+      it "will reduce the balance by a specified amount" do
+        subject.top_up(50)
+        subject.deduct(5)
+        expect(subject.balance).to eq 45
+      end
+    end
+
 end
