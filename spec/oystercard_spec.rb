@@ -25,4 +25,25 @@ describe Oystercard do
       end
     end
 
+    describe "#in_jorney?" do
+      it "will return if a passenger is currently travelling or not" do
+        expect(subject.in_jorney?).to be false 
+      end
+    end
+
+    describe "#touch_in" do
+      it "will change the state of the card for 'in use'" do
+        subject.touch_in
+        expect(subject.in_jorney?).to be true
+      end
+    end
+
+    describe "#touch_out" do
+      it "will change the state of the card for 'not in use'" do
+        subject.touch_in
+        subject.touch_out
+        expect(subject.in_jorney?).to be false
+      end
+    end
+
 end
