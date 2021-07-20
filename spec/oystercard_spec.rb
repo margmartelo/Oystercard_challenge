@@ -17,14 +17,6 @@ describe Oystercard do
       end
     end
 
-    describe "#deduct" do
-      it "will reduce the balance by a specified amount" do
-        subject.top_up(50)
-        subject.deduct(5)
-        expect(subject.balance).to eq 45
-      end
-    end
-
     describe "#in_jorney?" do
       it "will return if a passenger is currently travelling or not" do
         expect(subject.in_jorney?).to be false 
@@ -53,6 +45,12 @@ describe Oystercard do
         subject.touch_in
         subject.touch_out
         expect(subject.in_jorney?).to be false
+      end
+
+      it "will reduce the balance by minimum fare" do
+        subject.top_up(10)
+        subject.touch_in
+        expect { subject.touch_out }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
       end
     end
 
