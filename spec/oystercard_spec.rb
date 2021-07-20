@@ -24,32 +24,41 @@ describe Oystercard do
     end
 
     describe "#touch_in" do
+      let(:station) { double :station }
       context "when balance is equal or higher than minimum fare" do
         it "will change the state of the card for 'in use'" do
           subject.top_up(10)
-          subject.touch_in
+          subject.touch_in(station)
           expect(subject.in_jorney?).to be true
         end
+
+        it "will save the entry station" do
+          subject.top_up(10)
+          subject.touch_in("Liverpool Street")
+          expect(subject.entry_station).to eq "Liverpool Street"
+        end
+
       end
 
       context "when balance is lower than minimum fare" do
         it "will raise an error" do
-          expect { subject.touch_in }.to raise_error("Sorry, your card's balance isn't enough for travelling. Please top up.")
+          expect { subject.touch_in(station) }.to raise_error("Sorry, your card's balance isn't enough for travelling. Please top up.")
         end
       end
     end
 
     describe "#touch_out" do
+      let(:station) { double :station }
       it "will change the state of the card for 'not in use'" do
         subject.top_up(10)
-        subject.touch_in
+        subject.touch_in(station)
         subject.touch_out
         expect(subject.in_jorney?).to be false
       end
 
       it "will reduce the balance by minimum fare" do
         subject.top_up(10)
-        subject.touch_in
+        subject.touch_in(station)
         expect { subject.touch_out }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
       end
     end
