@@ -52,14 +52,21 @@ describe Oystercard do
       it "will change the state of the card for 'not in use'" do
         subject.top_up(10)
         subject.touch_in(station)
-        subject.touch_out
+        subject.touch_out(station)
         expect(subject.in_jorney?).to be false
       end
 
       it "will reduce the balance by minimum fare" do
         subject.top_up(10)
         subject.touch_in(station)
-        expect { subject.touch_out }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
+        expect { subject.touch_out(station) }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
+      end
+
+      it "will save the exit station" do
+        subject.top_up(10)
+        subject.touch_in(station)
+        subject.touch_out("Piccadilly Circus")
+        expect(subject.exit_station).to eq "Piccadilly Circus"
       end
     end
 
