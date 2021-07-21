@@ -48,26 +48,29 @@ describe Oystercard do
     end
 
     describe "#touch_out" do
-      let(:station) { double :station }
-      it "will change the state of the card for 'not in use'" do
-        subject.top_up(10)
-        subject.touch_in(station)
-        subject.touch_out(station)
-        expect(subject.in_jorney?).to be false
-      end
+      let(:entry_station) { double :station }
+      let(:exit_station) { double :station }
+        context "in journey" do 
+            before do
+              subject.top_up(10)
+              subject.touch_in(entry_station)
+            end
+        
+          it "will change the state of the card for 'not in use'" do
+            subject.touch_out(exit_station)
+            expect(subject.in_jorney?).to be false
+          end
 
-      it "will reduce the balance by minimum fare" do
-        subject.top_up(10)
-        subject.touch_in(station)
-        expect { subject.touch_out(station) }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
-      end
+          it "will reduce the balance by minimum fare" do
+            expect { subject.touch_out(exit_station) }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
+          end
 
-      it "will save the exit station" do
-        subject.top_up(10)
-        subject.touch_in(station)
-        subject.touch_out("Piccadilly Circus")
-        expect(subject.exit_station).to eq "Piccadilly Circus"
-      end
+          it "will save the exit station" do
+            subject.touch_out("Piccadilly Circus")
+            expect(subject.exit_station).to eq "Piccadilly Circus"
+          end
+        end
     end
+
 
 end
