@@ -72,5 +72,18 @@ describe Oystercard do
         end
     end
 
+    it "contains an empty list of journeys by default" do
+      expect(subject.journeys).to be_empty
+    end
+
+    it "will save journey history" do
+      subject.top_up(10)
+      subject.touch_in("Liverpool Street")
+      subject.touch_out("Piccadilly Circus")
+      expect(subject.journeys).to include :entry_station => "Liverpool Street", :exit_station => "Piccadilly Circus"
+    end
+    
 
 end
+
+
