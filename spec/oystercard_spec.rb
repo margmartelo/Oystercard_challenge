@@ -35,7 +35,8 @@ describe Oystercard do
         it "will save the entry station" do
           subject.top_up(10)
           subject.touch_in("Liverpool Street")
-          expect(subject.entry_station).to eq "Liverpool Street"
+          current_journey = subject.journeys[-1]
+          expect(current_journey.entry_station).to eq "Liverpool Street"
         end
 
       end
@@ -67,7 +68,8 @@ describe Oystercard do
 
           it "will save the exit station" do
             subject.touch_out("Piccadilly Circus")
-            expect(subject.exit_station).to eq "Piccadilly Circus"
+            current_journey = subject.journeys[-1]
+            expect(current_journey.exit_station).to eq "Piccadilly Circus"
           end
         end
     end
@@ -80,10 +82,10 @@ describe Oystercard do
       subject.top_up(10)
       subject.touch_in("Liverpool Street")
       subject.touch_out("Piccadilly Circus")
-      expect(subject.journeys).to include :entry_station => "Liverpool Street", :exit_station => "Piccadilly Circus"
+      current_journey = subject.journeys[-1]
+      expect(current_journey.entry_station).to eq "Liverpool Street"
+      expect(current_journey.exit_station).to eq "Piccadilly Circus" 
     end
-    
-
 end
 
 
