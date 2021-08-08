@@ -25,6 +25,7 @@ class Oystercard
     end
 
     def touch_in(station)
+        # @journeyLog.touch_in(station)
         journey = Journey.new(station)
         @journeys.push(journey)
         fail "Sorry, your card's balance isn't enough for travelling. Please top up." if @balance < MINIMUM_FARE
