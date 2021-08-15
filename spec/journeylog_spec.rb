@@ -4,6 +4,7 @@ describe JourneyLog do
     let(:journey){ double :journey }
     let(:station){ double :station }
     let(:journey_class){ double :journey_class }
+
     
     describe '#start' do
         it 'will start a journey' do
@@ -20,5 +21,8 @@ describe JourneyLog do
         end
     end
 
+
+
+     
   
 end
