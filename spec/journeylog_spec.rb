@@ -30,5 +30,14 @@ describe JourneyLog do
             journeyLog.finish(exit_station)
         end
     end
+
+    describe 'journeys' do
+        it "should contain current_journey" do
+            allow(journey_class).to receive(:new).with(entry_station).and_return journey
+            journeyLog = JourneyLog.new(journey_class)
+            journeyLog.start(entry_station)
+            expect(journeyLog.journeys).to include(journey)
+        end    
+    end
   
 end
