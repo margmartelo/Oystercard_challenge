@@ -5,8 +5,6 @@ describe Oystercard do
     let(:entry_station) { double :station }
     let(:exit_station) { double :station }
     let(:journeyLog) { double :journeyLog, current_journey: nil }
-    
-
    
     it "should have an initial default balance of 0" do
       oyster = Oystercard.new(journeyLog)
@@ -58,7 +56,7 @@ describe Oystercard do
 
     describe "#touch_out" do
         context "in journey" do 
-       
+    
               it "will change the state of the card for 'not in use'" do
                 oyster = Oystercard.new(journeyLog)
                 oyster.top_up(10)
@@ -71,12 +69,12 @@ describe Oystercard do
               end
 
               it "will reduce the balance by minimum fare" do
-                oyster = Oystercard.new(journeyLog)
-              oyster.top_up(10)
-              allow(journeyLog).to receive(:start).with(entry_station)
-              oyster.touch_in(entry_station)
-              allow(journeyLog).to receive(:finish).with(exit_station)
-                expect { oyster.touch_out(exit_station) }.to change{ oyster.balance }.by(-Oystercard::MINIMUM_FARE)
+                  oyster = Oystercard.new(journeyLog)
+                  oyster.top_up(10)
+                  allow(journeyLog).to receive(:start).with(entry_station)
+                  oyster.touch_in(entry_station)
+                  allow(journeyLog).to receive(:finish).with(exit_station)
+                  expect { oyster.touch_out(exit_station) }.to change{ oyster.balance }.by(-Oystercard::MINIMUM_FARE)
               end
         end
     end
