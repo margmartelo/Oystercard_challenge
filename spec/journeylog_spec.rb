@@ -20,7 +20,7 @@ describe JourneyLog do
             expect(journeyLog.current_journey).to eq journey
         end
     end
-#finish should add an exit station to the current_journey
+
     describe '#finish' do
         it 'will add an exit station to a journey' do
             allow(journey_class).to receive(:new).with(entry_station).and_return journey
@@ -39,5 +39,4 @@ describe JourneyLog do
             expect(journeyLog.journeys).to include(journey)
         end    
     end
-  
 end
