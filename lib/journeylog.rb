@@ -1,21 +1,22 @@
 class JourneyLog
 
-    attr_reader :entry_station, :journeys
+    attr_reader :entry_station, :exit_station, :current_journey
 
     def initialize(journey_class)
         @journey_class = journey_class
-        @journeys = []
         @current_journey = nil
     end
 
-    def start(station)
-        journey = @journey_class.new(station)
-        @journeys.push(journey)
-        @current_journey = @journeys[-1]
+    def start(entry_station)
+        _current_journey(entry_station)
+    end
+
+    def finish(exit_station)
+        @current_journey.finish(exit_station)
     end
     
     private
-    def current_journey
+    def _current_journey(station)
         @current_journey = @journey_class.new(station) unless @current_journey != nil
         @current_journey
     end
